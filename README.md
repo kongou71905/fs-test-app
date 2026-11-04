@@ -11,3 +11,6 @@ GitHubでのWebアプリ作成のお試しとして作成したプロジェク�
 # 他ツールの利用について
 - 画面デザイン作成については「Figma」を利用する。
 https://www.figma.com/ja-jp/
+
+- Figmaの使い方参考サイト
+https://stand-4u.com/web/tool/figma.html
