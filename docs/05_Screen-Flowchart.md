@@ -1,9 +1,9 @@
 # 画面遷移図
-## TOP画面
+### モード選択画面
 ```mermaid
 flowchart LR
-	start[[アプリ起動]] --> top[TOP画面]
-    top[TOP画面] --> kanri[管理画面]
-    top[TOP画面] --> Data[データ画面]
-    top[TOP画面] --> input[入力画面]
+	start[[アプリ起動]] --> 01-top[モード選択画面]
+    01-top[モード選択画面] --> 02-kanri[対局者管理画面]
+    01-top[モード選択画面] --> 03-Data[過去データ画面]
+    01-top[モード選択画面] --> 04-input[成績入力画面]
 ```
