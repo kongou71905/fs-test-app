@@ -62,5 +62,12 @@ flowchart LR
         D[戻るボタン]
     end
     
+    subgraph 03-Data[過去データ画面]
+        E[各成績部分]
+        D[戻るボタン]
+    end
+    
     A --> 02-kanri
+    B --> 03-Data
+    D --> 01-top
 ```
