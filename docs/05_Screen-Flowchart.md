@@ -1,4 +1,4 @@
-# 画面遷移図
+# 画面遷移図（個別）
 ### モード選択画面（01-top）
 ```mermaid
 flowchart LR
@@ -47,27 +47,4 @@ flowchart LR
 ```mermaid
 flowchart LR
 	07-chip[チップ入力画面] -- 「OK」ボタン押下 --> 05-view[成績表示画面]
-```
-
-### 全体図
-```mermaid
-flowchart LR
-	subgraph 01-top[モード選択画面]
-        A[対局者管理ボタン]
-        B[過去データボタン]
-        C[成績入力ボタン]
-    end
-	
-	subgraph 02-kanri[対局者管理画面]
-        D[戻るボタン]
-    end
-    
-    subgraph 03-Data[過去データ画面]
-        E[各成績部分]
-        D[戻るボタン]
-    end
-    
-    A --> 02-kanri
-    B --> 03-Data
-    D --> 01-top
 ```
