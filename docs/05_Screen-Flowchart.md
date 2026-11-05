@@ -2,7 +2,7 @@
 ### モード選択画面（01-top）
 ```mermaid
 flowchart LR
-	start[[アプリ起動]] --> 01-top[モード選択画面(01)]
+	start[[アプリ起動]] --> 01-top[モード選択画面]
     01-top[モード選択画面] -- 「対局者管理」ボタン押下 --> 02-kanri[対局者管理画面]
     01-top[モード選択画面] -- 「過去データ」ボタン押下 --> 03-Data[過去データ画面]
     01-top[モード選択画面] -- 「成績入力」ボタン押下 --> 04-set[日付対局者設定画面]
@@ -47,4 +47,20 @@ flowchart LR
 ```mermaid
 flowchart LR
 	07-chip[チップ入力画面] -- 「OK」ボタン押下 --> 05-view[成績表示画面]
+```
+
+### 全体図
+```mermaid
+flowchart LR
+	subgraph 01-top[モード選択画面]
+        A[対局者管理ボタン]
+        B[過去データボタン]
+        C[成績入力ボタン]
+    end
+	
+	subgraph 02-kanri[対局者管理画面]
+        D[戻るボタン]
+    end
+    
+    A --> 02-kanri
 ```
