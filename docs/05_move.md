@@ -1,0 +1,6 @@
+# 画面遷移図
+```mermaid
+flowchart TD
+    A[入力] --> B[処理]
+    B --> C[出力]
+```
