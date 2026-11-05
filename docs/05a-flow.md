@@ -45,6 +45,7 @@ flowchart LR
     G --> 05-view
     H --> 04-set
     L --> 01-top
+	L -- 過去データ画面から遷移していた場合 --> 03-Data
     i --> 06-input
     J --> 06-input
     M --> 05-view
