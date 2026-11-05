@@ -46,6 +46,7 @@ flowchart LR
     H --> 04-set
     L --> 01-top
     i --> 06-input
+    J --> 06-input
     M --> 05-view
     K --> 07-chip
     N --> 05-view
