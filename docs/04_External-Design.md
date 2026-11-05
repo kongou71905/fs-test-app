@@ -4,7 +4,8 @@
 # 設計内容
 
 ## 画面設計
-- モード選択画面
+- モード選択画面<br>
+ https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=0-1&t=JbKuXWjJjfHwaJ14-1
 - 対局者管理画面
 - 過去データ画面
 - 日付対局者設定画面
