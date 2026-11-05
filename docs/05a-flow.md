@@ -28,6 +28,14 @@ flowchart LR
         L[終了ボタン]
     end
     
+    subgraph 06-input[成績入力画面]
+        M[OKボタン]
+    end
+    
+    subgraph 07-chip[チップ入力画面]
+        N[OKボタン]
+    end
+    
     A --> 02-kanri
     B --> 03-Data
     C --> 04-set
@@ -37,4 +45,8 @@ flowchart LR
     G --> 05-view
     H --> 04-set
     L --> 01-top
+    i --> 06-input
+    M --> 05-view
+    K --> 07-chip
+    N --> 05-view
 ```
