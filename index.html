@@ -43,9 +43,9 @@
 
 
     <!-- ========================================== -->
-    <!-- 2. 对局者管理画面 -->
+    <!-- 2. 対局者管理画面（初期状態：hiddenで完全非表示） -->
     <!-- ========================================== -->
-    <div id="managementScreen" class="w-full max-w-md min-h-[75vh] flex flex-col justify-between hidden">
+    <div id="managementScreen" class="w-full max-w-md min-h-[75vh] flex-col justify-between hidden">
         <div>
             <!-- 画面タイトル -->
             <header class="mb-10">
@@ -59,7 +59,7 @@
                 <div class="col-span-4"></div>
             </div>
 
-            <!-- 对局者リスト（JavaScriptで動的に生成されます） -->
+            <!-- 対局者リスト（JavaScriptで動的に生成されます） -->
             <div id="playerList" class="flex flex-col gap-4">
                 <!-- ここにプレイヤーの行が追加されます -->
             </div>
@@ -82,7 +82,7 @@
     <!-- ========================================== -->
     <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide pt-12 flex justify-center gap-4">
         <span>2026/11/06</span>
-        <span>ver0.0.1</span>
+        <span>ver0.0.2</span>
     </footer>
 
 
@@ -102,12 +102,20 @@
             const management = document.getElementById('managementScreen');
 
             if (screenName === 'management') {
+                // メニューを消して、管理画面を表示（flexを同時に付与してレイアウトを維持）
                 menu.classList.add('hidden');
+                menu.classList.remove('flex');
+                
                 management.classList.remove('hidden');
+                management.classList.add('flex');
                 renderPlayers();
             } else if (screenName === 'menu') {
+                // 管理画面を消して、メニューを表示
                 management.classList.add('hidden');
+                management.classList.remove('flex');
+                
                 menu.classList.remove('hidden');
+                menu.classList.add('flex');
             } else {
                 alert(`${screenName} 画面は実装待ちです。`);
             }
@@ -166,7 +174,8 @@
             }
         }
 
-        renderPlayers();
+        // 初期ロード時はデータの準備だけ行い、画面のクラスはそのまま（メニューのみ表示）にします
+        localStorage.setItem('mahjong_players', JSON.stringify(players));
     </script>
 </body>
 </html>
