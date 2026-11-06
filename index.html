@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>麻雀成績管理ツール</title>
-    <!-- スタイリングを簡単に調整できるようにTailwind CSSを読み込んでいます -->
+    <!-- Tailwind CSSを読み込んでいます -->
     <script src="https://tailwindcss.com"></script>
     <style>
-        /* フォントや微調整用のカスタムスタイル */
         body {
             font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
         }
@@ -22,18 +21,18 @@
         </h1>
     </header>
 
-    <!-- ボタン（メニュー）エリア -->
-    <main class="w-full max-w-xs flex flex-col gap-12 my-auto">
+    <!-- ボタンメニューエリア（gap-16 でボタン間のスペースを広げました） -->
+    <main class="w-full max-w-xs flex flex-col gap-16 my-auto">
         <button onclick="handleNavigation('management')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            管理ボタン
+            管理
         </button>
 
         <button onclick="handleNavigation('data')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            データボタン
+            データ
         </button>
 
         <button onclick="handleNavigation('input')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            入力ボタン
+            入力
         </button>
     </main>
 
@@ -46,8 +45,6 @@
     <!-- 各ボタンを押したときの動きを制御するJavaScript -->
     <script>
         function handleNavigation(page) {
-            // ここに、ボタンを押したときの処理（画面切り替えやページ遷移など）を後から追加できます。
-            // 現時点では動作確認用にアラートを表示します。
             switch(page) {
                 case 'management':
                     alert('管理画面へ移動します（実装待ち）');
