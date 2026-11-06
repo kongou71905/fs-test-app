@@ -12,7 +12,7 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen">
+<body class="bg-white text-gray-900 min-h-screen m-0 p-0">
 
     <!-- ========================================== -->
     <!-- 1. モード選択画面（画面全体） -->
@@ -43,15 +43,15 @@
         <!-- メニュー画面用フッター -->
         <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
             <span>2026/11/06</span>
-            <span>ver0.0.3</span>
+            <span>ver0.0.4</span>
         </footer>
     </div>
 
 
     <!-- ========================================== -->
-    <!-- 2. 対局者管理画面（初期状態：完全非表示） -->
+    <!-- 2. 対局者管理画面（初期状態は hidden のみ指定して強制非表示） -->
     <!-- ========================================== -->
-    <div id="managementScreen" class="w-full min-h-screen flex-col justify-between items-center py-16 px-4 hidden">
+    <div id="managementScreen" class="hidden">
         <div class="w-full max-w-md flex-grow">
             <!-- 画面タイトル -->
             <header class="mb-10 text-center">
@@ -85,8 +85,8 @@
             <!-- 管理画面用フッター -->
             <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
                 <span>2026/11/06</span>
-                <span>ver0.0.3</span>
-            </footer>
+                <span>ver0.0.4</span>
+            </div>
         </footer>
     </div>
 
@@ -107,82 +107,24 @@
             const management = document.getElementById('managementScreen');
 
             if (screenName === 'management') {
-                // メニュー（画面全体）を非表示に
-                menu.classList.add('hidden');
-                menu.classList.remove('flex');
+                // 1. モード選択画面を完全に非表示にする（すべての表示系クラスを削除）
+                menu.className = "hidden";
                 
-                // 管理画面（画面全体）を表示
-                management.classList.remove('hidden');
-                management.classList.add('flex');
+                // 2. 対局者管理画面をフルスクリーン表示モードで起動する
+                management.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                
                 renderPlayers();
-                
-                // ページ最上部にスクロール（別ページ遷移の挙動再現）
                 window.scrollTo(0, 0);
             } else if (screenName === 'menu') {
-                // 管理画面（画面全体）を非表示に
-                management.classList.add('hidden');
-                management.classList.remove('flex');
+                // 1. 対局者管理画面を完全に非表示にする
+                management.className = "hidden";
                 
-                // メニュー（画面全体）を表示
-                menu.classList.remove('hidden');
-                menu.classList.add('flex');
+                // 2. モード選択画面をフルスクリーン表示モードで起動する
+                menu.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
                 
                 window.scrollTo(0, 0);
             } else {
                 alert(`${screenName} 画面は実装待ちです。`);
-            }
-        }
-
-        function renderPlayers() {
-            const listContainer = document.getElementById('playerList');
-            listContainer.innerHTML = '';
-
-            players.forEach((player, index) => {
-                const row = document.createElement('div');
-                row.className = 'grid grid-cols-12 gap-2 items-center';
-
-                row.innerHTML = `
-                    <div class="col-span-2 pl-2 text-gray-700 font-medium">${index + 1}</div>
-                    <div class="col-span-6">
-                        <input 
-                            type="text" 
-                            value="${player.name}" 
-                            onchange="updatePlayerName(${player.id}, this.value)"
-                            class="w-full bg-green-50 border border-transparent focus:border-green-300 focus:bg-white focus:outline-none px-3 py-2 text-gray-800 rounded-sm"
-                            placeholder="名前を入力"
-                        >
-                    </div>
-                    <div class="col-span-4 text-right">
-                        <button 
-                            onclick="deletePlayer(${player.id})" 
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider"
-                        >
-                            削除
-                        </button>
-                    </div>
-                `;
-                listContainer.appendChild(row);
-            });
-
-            localStorage.setItem('mahjong_players', JSON.stringify(players));
-        }
-
-        function addPlayer() {
-            const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
-            players.push({ id: newId, name: '名前' });
-            renderPlayers();
-        }
-
-        function deletePlayer(id) {
-            players = players.filter(player => player.id !== id);
-            renderPlayers();
-        }
-
-        function updatePlayerName(id, newName) {
-            const player = players.find(p => p.id === id);
-            if (player) {
-                player.name = newName;
-                localStorage.setItem('mahjong_players', JSON.stringify(players));
             }
         }
     </script>
