@@ -14,49 +14,159 @@
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
 
-    <!-- タイトルエリア -->
-    <header class="w-full text-center max-w-md pt-8">
-        <h1 class="text-xl font-bold tracking-wider text-gray-800">
-            麻雀成績管理ツール
-        </h1>
-    </header>
+    <!-- ========================================== -->
+    <!-- 1. メニュー画面（トップ画面） -->
+    <!-- ========================================== -->
+    <div id="menuScreen" class="w-full min-h-[70vh] flex flex-col justify-between items-center">
+        <!-- タイトルエリア -->
+        <header class="w-full text-center max-w-md pt-8">
+            <h1 class="text-xl font-bold tracking-wider text-gray-800">
+                麻雀成績管理ツール
+            </h1>
+        </header>
 
-    <!-- ボタンメニューエリア -->
-    <main class="w-full max-w-xs flex flex-col gap-48 my-auto">
-        <button onclick="handleNavigation('management')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            管理
-        </button>
+        <!-- ボタンメニューエリア -->
+        <main class="w-full max-w-xs flex flex-col gap-12 my-auto">
+            <button onclick="showScreen('management')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+                管理
+            </button>
 
-        <button onclick="handleNavigation('data')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            データ
-        </button>
+            <button onclick="showScreen('data')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+                データ
+            </button>
 
-        <button onclick="handleNavigation('input')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
-            入力
-        </button>
-    </main>
+            <button onclick="showScreen('input')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+                入力
+            </button>
+        </main>
+    </div>
 
-    <!-- フッター（バージョン・日付）エリア -->
-    <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide pb-4 flex justify-center gap-4">
+
+    <!-- ========================================== -->
+    <!-- 2. 对局者管理画面 -->
+    <!-- ========================================== -->
+    <div id="managementScreen" class="w-full max-w-md min-h-[75vh] flex flex-col justify-between hidden">
+        <div>
+            <!-- 画面タイトル -->
+            <header class="mb-10">
+                <h2 class="text-xl font-bold tracking-wider text-gray-800">対局者管理画面</h2>
+            </header>
+
+            <!-- テーブルヘッダー -->
+            <div class="grid grid-cols-12 gap-2 mb-4 text-gray-700 font-medium">
+                <div class="col-span-2 pl-2">ID</div>
+                <div class="col-span-6">対局者名</div>
+                <div class="col-span-4"></div>
+            </div>
+
+            <!-- 对局者リスト（JavaScriptで動的に生成されます） -->
+            <div id="playerList" class="flex flex-col gap-4">
+                <!-- ここにプレイヤーの行が追加されます -->
+            </div>
+        </div>
+
+        <!-- 下部アクションボタンエリア -->
+        <footer class="flex justify-between gap-8 mt-12">
+            <button onclick="addPlayer()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                追加
+            </button>
+            <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                戻る
+            </button>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 共通フッター（バージョン・日付） -->
+    <!-- ========================================== -->
+    <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide pt-12 flex justify-center gap-4">
         <span>2026/11/06</span>
         <span>ver0.0.1</span>
     </footer>
 
-    <!-- 各ボタンを押したときの動きを制御するJavaScript -->
+
+    <!-- ========================================== -->
+    <!-- ロジック制御（JavaScript） -->
+    <!-- ========================================== -->
     <script>
-        function handleNavigation(page) {
-            switch(page) {
-                case 'management':
-                    alert('管理画面へ移動します（実装待ち）');
-                    break;
-                case 'data':
-                    alert('データ画面へ移動します（実装待ち）');
-                    break;
-                case 'input':
-                    alert('入力画面へ移動します（実装待ち）');
-                    break;
+        const defaultPlayers = [
+            { id: 1, name: '名前' },
+            { id: 2, name: '名前' }
+        ];
+
+        let players = JSON.parse(localStorage.getItem('mahjong_players')) || defaultPlayers;
+
+        function showScreen(screenName) {
+            const menu = document.getElementById('menuScreen');
+            const management = document.getElementById('managementScreen');
+
+            if (screenName === 'management') {
+                menu.classList.add('hidden');
+                management.classList.remove('hidden');
+                renderPlayers();
+            } else if (screenName === 'menu') {
+                management.classList.add('hidden');
+                menu.classList.remove('hidden');
+            } else {
+                alert(`${screenName} 画面は実装待ちです。`);
             }
         }
+
+        function renderPlayers() {
+            const listContainer = document.getElementById('playerList');
+            listContainer.innerHTML = '';
+
+            players.forEach((player, index) => {
+                const row = document.createElement('div');
+                row.className = 'grid grid-cols-12 gap-2 items-center';
+
+                row.innerHTML = `
+                    <div class="col-span-2 pl-2 text-gray-700 font-medium">${index + 1}</div>
+                    <div class="col-span-6">
+                        <input 
+                            type="text" 
+                            value="${player.name}" 
+                            onchange="updatePlayerName(${player.id}, this.value)"
+                            class="w-full bg-green-50 border border-transparent focus:border-green-300 focus:bg-white focus:outline-none px-3 py-2 text-gray-800 rounded-sm"
+                            placeholder="名前を入力"
+                        >
+                    </div>
+                    <div class="col-span-4 text-right">
+                        <button 
+                            onclick="deletePlayer(${player.id})" 
+                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider"
+                        >
+                            削除
+                        </button>
+                    </div>
+                `;
+                listContainer.appendChild(row);
+            });
+
+            localStorage.setItem('mahjong_players', JSON.stringify(players));
+        }
+
+        function addPlayer() {
+            const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
+            players.push({ id: newId, name: '名前' });
+            renderPlayers();
+        }
+
+        function deletePlayer(id) {
+            players = players.filter(player => player.id !== id);
+            renderPlayers();
+        }
+
+        function updatePlayerName(id, newName) {
+            const player = players.find(p => p.id === id);
+            if (player) {
+                player.name = newName;
+                localStorage.setItem('mahjong_players', JSON.stringify(players));
+            }
+        }
+
+        renderPlayers();
     </script>
 </body>
 </html>
