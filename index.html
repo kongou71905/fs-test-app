@@ -12,12 +12,12 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
+<body class="bg-white text-gray-900 min-h-screen">
 
     <!-- ========================================== -->
-    <!-- 1. メニュー画面（トップ画面） -->
+    <!-- 1. モード選択画面（画面全体） -->
     <!-- ========================================== -->
-    <div id="menuScreen" class="w-full min-h-[70vh] flex flex-col justify-between items-center">
+    <div id="menuScreen" class="w-full min-h-screen flex flex-col justify-between items-center py-16 px-4">
         <!-- タイトルエリア -->
         <header class="w-full text-center max-w-md pt-8">
             <h1 class="text-xl font-bold tracking-wider text-gray-800">
@@ -39,51 +39,56 @@
                 入力
             </button>
         </main>
+
+        <!-- メニュー画面用フッター -->
+        <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
+            <span>2026/11/06</span>
+            <span>ver0.0.3</span>
+        </footer>
     </div>
 
 
     <!-- ========================================== -->
-    <!-- 2. 対局者管理画面（初期状態：hiddenで完全非表示） -->
+    <!-- 2. 対局者管理画面（初期状態：完全非表示） -->
     <!-- ========================================== -->
-    <div id="managementScreen" class="w-full max-w-md min-h-[75vh] flex-col justify-between hidden">
-        <div>
+    <div id="managementScreen" class="w-full min-h-screen flex-col justify-between items-center py-16 px-4 hidden">
+        <div class="w-full max-w-md flex-grow">
             <!-- 画面タイトル -->
-            <header class="mb-10">
+            <header class="mb-10 text-center">
                 <h2 class="text-xl font-bold tracking-wider text-gray-800">対局者管理画面</h2>
             </header>
 
             <!-- テーブルヘッダー -->
-            <div class="grid grid-cols-12 gap-2 mb-4 text-gray-700 font-medium">
+            <div class="grid grid-cols-12 gap-2 mb-4 text-gray-700 font-medium max-w-xs mx-auto md:max-w-md">
                 <div class="col-span-2 pl-2">ID</div>
                 <div class="col-span-6">対局者名</div>
                 <div class="col-span-4"></div>
             </div>
 
             <!-- 対局者リスト（JavaScriptで動的に生成されます） -->
-            <div id="playerList" class="flex flex-col gap-4">
+            <div id="playerList" class="flex flex-col gap-4 max-w-xs mx-auto md:max-w-md">
                 <!-- ここにプレイヤーの行が追加されます -->
             </div>
         </div>
 
         <!-- 下部アクションボタンエリア -->
-        <footer class="flex justify-between gap-8 mt-12">
-            <button onclick="addPlayer()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
-                追加
-            </button>
-            <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
-                戻る
-            </button>
+        <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
+            <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+                <button onclick="addPlayer()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    追加
+                </button>
+                <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    戻る
+                </button>
+            </div>
+            
+            <!-- 管理画面用フッター -->
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
+                <span>2026/11/06</span>
+                <span>ver0.0.3</span>
+            </footer>
         </footer>
     </div>
-
-
-    <!-- ========================================== -->
-    <!-- 共通フッター（バージョン・日付） -->
-    <!-- ========================================== -->
-    <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide pt-12 flex justify-center gap-4">
-        <span>2026/11/06</span>
-        <span>ver0.0.2</span>
-    </footer>
 
 
     <!-- ========================================== -->
@@ -102,20 +107,27 @@
             const management = document.getElementById('managementScreen');
 
             if (screenName === 'management') {
-                // メニューを消して、管理画面を表示（flexを同時に付与してレイアウトを維持）
+                // メニュー（画面全体）を非表示に
                 menu.classList.add('hidden');
                 menu.classList.remove('flex');
                 
+                // 管理画面（画面全体）を表示
                 management.classList.remove('hidden');
                 management.classList.add('flex');
                 renderPlayers();
+                
+                // ページ最上部にスクロール（別ページ遷移の挙動再現）
+                window.scrollTo(0, 0);
             } else if (screenName === 'menu') {
-                // 管理画面を消して、メニューを表示
+                // 管理画面（画面全体）を非表示に
                 management.classList.add('hidden');
                 management.classList.remove('flex');
                 
+                // メニュー（画面全体）を表示
                 menu.classList.remove('hidden');
                 menu.classList.add('flex');
+                
+                window.scrollTo(0, 0);
             } else {
                 alert(`${screenName} 画面は実装待ちです。`);
             }
@@ -173,9 +185,6 @@
                 localStorage.setItem('mahjong_players', JSON.stringify(players));
             }
         }
-
-        // 初期ロード時はデータの準備だけ行い、画面のクラスはそのまま（メニューのみ表示）にします
-        localStorage.setItem('mahjong_players', JSON.stringify(players));
     </script>
 </body>
 </html>
