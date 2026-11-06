@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>麻雀成績管理ツール</title>
     <!-- Tailwind CSSを読み込んでいます -->
-    <script src="https://tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
             font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
         }
-        /* 画面表示の競合を確実に防ぐためのユーティリティ */
         .screen-hidden {
             display: none !important;
+        }
+        /* スクロール可能なテーブル用のスタイル調整 */
+        .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
         }
     </style>
 </head>
@@ -22,60 +26,49 @@
     <!-- 1. モード選択画面（トップ画面） -->
     <!-- ========================================== -->
     <div id="menuScreen" class="w-full min-h-screen flex flex-col justify-between items-center py-16 px-4">
-        <!-- タイトルエリア -->
         <header class="w-full text-center max-w-md pt-8">
             <h1 class="text-xl font-bold tracking-wider text-gray-800">
                 麻雀成績管理ツール
             </h1>
         </header>
 
-        <!-- ボタンメニューエリア -->
         <main class="w-full max-w-xs flex flex-col gap-12 my-auto">
             <button onclick="showScreen('management')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
                 管理
             </button>
-
             <button onclick="showScreen('data')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
                 データ
             </button>
-
             <button onclick="showScreen('input')" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
                 入力
             </button>
         </main>
 
-        <!-- メニュー画面用フッター -->
         <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
             <span>2026/11/06</span>
-            <span>ver0.0.7</span>
+            <span>ver0.0.8</span>
         </footer>
     </div>
 
 
     <!-- ========================================== -->
-    <!-- 2. 対局者管理画面（初期状態は screen-hidden で強制完全非表示） -->
+    <!-- 2. 対局者管理画面 -->
     <!-- ========================================== -->
     <div id="managementScreen" class="screen-hidden">
         <div class="w-full max-w-md flex-grow">
-            <!-- 画面タイトル -->
             <header class="mb-10 text-center">
                 <h2 class="text-xl font-bold tracking-wider text-gray-800">対局者管理画面</h2>
             </header>
 
-            <!-- テーブルヘッダー -->
             <div class="grid grid-cols-12 gap-2 mb-4 text-gray-700 font-medium max-w-xs mx-auto md:max-w-md">
                 <div class="col-span-2 pl-2">ID</div>
                 <div class="col-span-6">対局者名</div>
                 <div class="col-span-4"></div>
             </div>
 
-            <!-- 対局者リスト（JavaScriptで動的に生成） -->
-            <div id="playerList" class="flex flex-col gap-4 max-w-xs mx-auto md:max-w-md">
-                <!-- ここにプレイヤーの行が追加されます -->
-            </div>
+            <div id="playerList" class="flex flex-col gap-4 max-w-xs mx-auto md:max-w-md"></div>
         </div>
 
-        <!-- 下部アクションボタンエリア -->
         <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
             <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
                 <button onclick="addPlayer()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
@@ -85,11 +78,63 @@
                     戻る
                 </button>
             </div>
-            
-            <!-- 管理画面用フッター -->
             <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
                 <span>2026/11/06</span>
-                <span>ver0.0.7</span>
+                <span>ver0.0.8</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 3. 過去データ画面 -->
+    <!-- ========================================== -->
+    <div id="dataScreen" class="screen-hidden">
+        <div class="w-full max-w-2xl flex-grow px-2">
+            <!-- 年表示 -->
+            <div class="text-left w-full mb-4 pl-2 font-medium text-gray-800">2026年</div>
+
+            <!-- 成績テーブルコンテナ（横スクロール対応） -->
+            <div class="table-container border border-gray-400 bg-white">
+                <table class="w-full text-center border-collapse text-sm md:text-base">
+                    <thead>
+                        <!-- 対局者名行 -->
+                        <tr class="border-b border-gray-400">
+                            <th class="border-r border-gray-400 p-2 font-medium bg-gray-50 min-w-[100px]">対局者</th>
+                            <th id="th-p1" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                            <th id="th-p2" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                            <th id="th-p3" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                            <th id="th-p4" class="border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                        </tr>
+                        <!-- 成績トータル行 -->
+                        <tr class="border-b border-gray-400 bg-gray-50">
+                            <td class="border-r border-gray-400 p-2 font-medium">成績</td>
+                            <td class="border-r border-gray-400 p-2 font-bold text-red-500">-123</td>
+                            <td class="border-r border-gray-400 p-2 font-bold text-gray-900">+57</td>
+                            <td class="border-r border-gray-400 p-2 font-bold text-gray-900">+66</td>
+                            <td class="p-2 font-bold text-gray-900">0</td>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTableBody">
+                        <!-- JavaScriptでモック（または本番）データを挿入 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 下部アクションボタンエリア -->
+        <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12">
+            <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+                <button onclick="alert('期間選択機能は実装待ちです')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    期間
+                </button>
+                <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    戻る
+                </button>
+            </div>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
+                <span>2026/11/06</span>
+                <span>ver0.0.8</span>
             </div>
         </footer>
     </div>
@@ -100,8 +145,21 @@
     <!-- ========================================== -->
     <script>
         const defaultPlayers = [
-            { id: 1, name: '名前' },
-            { id: 2, name: '名前' }
+            { id: 1, name: 'プレイヤー1' },
+            { id: 2, name: 'プレイヤー2' },
+            { id: 3, name: 'プレイヤー3' },
+            { id: 4, name: 'プレイヤー4' }
+        ];
+
+        // 過去データのサンプルモック（画像のデザインを再現）
+        const sampleScores = [
+            { date: '2026/11/01', scores: ['0', '-123', '+57', '+66'] },
+            { date: '2026/11/02', scores: ['+66', '0', '-123', '+57'] },
+            { date: '2026/11/03', scores: ['+57', '+66', '0', '-123'] },
+            { date: '2026/11/04', scores: ['-123', '+57', '+66', '0'] },
+            { date: '2026/11/05', scores: ['0', '-123', '+57', '+66'] },
+            { date: '2026/11/06', scores: ['+66', '0', '-123', '+57'] },
+            { date: '2026/11/06', scores: ['+57', '+66', '0', '-123'] }
         ];
 
         let players = JSON.parse(localStorage.getItem('mahjong_players')) || defaultPlayers;
@@ -109,29 +167,29 @@
         function showScreen(screenName) {
             const menu = document.getElementById('menuScreen');
             const management = document.getElementById('managementScreen');
+            const dataScreen = document.getElementById('dataScreen');
+
+            // 全て一旦非表示
+            menu.className = "screen-hidden";
+            management.className = "screen-hidden";
+            dataScreen.className = "screen-hidden";
 
             if (screenName === 'management') {
-                // 1. トップ画面を完全に非表示にし、表示クラスを排除
-                menu.className = "screen-hidden";
-                
-                // 2. 対局者管理画面の非表示クラスを解除し、フルスクリーン用クラスを適用
                 management.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
-                
                 renderPlayers();
-                window.scrollTo(0, 0);
             } else if (screenName === 'menu') {
-                // 1. 対局者管理画面を完全に非表示にし、表示クラスを排除
-                management.className = "screen-hidden";
-                
-                // 2. トップ画面の非表示クラスを解除し、フルスクリーン用クラスを適用
                 menu.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
-                
-                window.scrollTo(0, 0);
+            } else if (screenName === 'data') {
+                dataScreen.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                renderDataScreen();
             } else {
                 alert(`${screenName} 画面は実装待ちです。`);
+                menu.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
             }
+            window.scrollTo(0, 0);
         }
 
+        // 对局者管理のレンダリング
         function renderPlayers() {
             const listContainer = document.getElementById('playerList');
             listContainer.innerHTML = '';
@@ -139,7 +197,6 @@
             players.forEach((player, index) => {
                 const row = document.createElement('div');
                 row.className = 'grid grid-cols-12 gap-2 items-center';
-
                 row.innerHTML = `
                     <div class="col-span-2 pl-2 text-gray-700 font-medium">${index + 1}</div>
                     <div class="col-span-6">
@@ -152,23 +209,52 @@
                         >
                     </div>
                     <div class="col-span-4 text-right">
-                        <button 
-                            onclick="deletePlayer(${player.id})" 
-                            class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider"
-                        >
-                            削除
-                        </button>
+                        <button onclick="deletePlayer(${player.id})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider">削除</button>
                     </div>
                 `;
                 listContainer.appendChild(row);
             });
-
             localStorage.setItem('mahjong_players', JSON.stringify(players));
+        }
+
+        // 過去データ画面のレンダリング
+        function renderDataScreen() {
+            // 登録されているプレイヤー名をテーブルヘッダーに反映 (最大4名分)
+            for (let i = 1; i <= 4; i++) {
+                const th = document.getElementById(`th-p\${i}`);
+                if (players[i - 1]) {
+                    th.innerText = players[i - 1].name;
+                } else {
+                    th.innerText = `氏名\${i}`;
+                }
+            }
+
+            // スコア行の生成
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            sampleScores.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-gray-400";
+
+                // 日付セル
+                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">\${row.date}</td>`;
+                
+                // 各プレイヤーのスコアセル (マイナス表記なら赤文字クラスを適用)
+                row.scores.forEach(score => {
+                    const isNegative = score.startsWith('-');
+                    const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
+                    html += `<td class="border-r border-gray-400 p-2 \${colorClass}">\${score}</td>`;
+                });
+
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
         }
 
         function addPlayer() {
             const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
-            players.push({ id: newId, name: '名前' });
+            players.push({ id: newId, name: `プレイヤー\${newId}` });
             renderPlayers();
         }
 
