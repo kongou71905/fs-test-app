@@ -13,7 +13,6 @@
         .screen-hidden {
             display: none !important;
         }
-        /* スクロール可能なテーブル用のスタイル調整 */
         .table-container {
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
@@ -45,8 +44,8 @@
         </main>
 
         <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-            <span>2026/11/06</span>
-            <span>ver0.0.8</span>
+            <span>2026/11/09</span>
+            <span>ver0.0.9</span>
         </footer>
     </div>
 
@@ -79,8 +78,8 @@
                 </button>
             </div>
             <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span>2026/11/06</span>
-                <span>ver0.0.8</span>
+                <span>2026/11/09</span>
+                <span>ver0.0.9</span>
             </div>
         </footer>
     </div>
@@ -91,14 +90,11 @@
     <!-- ========================================== -->
     <div id="dataScreen" class="screen-hidden">
         <div class="w-full max-w-2xl flex-grow px-2">
-            <!-- 年表示 -->
             <div class="text-left w-full mb-4 pl-2 font-medium text-gray-800">2026年</div>
 
-            <!-- 成績テーブルコンテナ（横スクロール対応） -->
             <div class="table-container border border-gray-400 bg-white">
                 <table class="w-full text-center border-collapse text-sm md:text-base">
                     <thead>
-                        <!-- 対局者名行 -->
                         <tr class="border-b border-gray-400">
                             <th class="border-r border-gray-400 p-2 font-medium bg-gray-50 min-w-[100px]">対局者</th>
                             <th id="th-p1" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
@@ -106,7 +102,6 @@
                             <th id="th-p3" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
                             <th id="th-p4" class="border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
                         </tr>
-                        <!-- 成績トータル行 -->
                         <tr class="border-b border-gray-400 bg-gray-50">
                             <td class="border-r border-gray-400 p-2 font-medium">成績</td>
                             <td class="border-r border-gray-400 p-2 font-bold text-red-500">-123</td>
@@ -115,14 +110,11 @@
                             <td class="p-2 font-bold text-gray-900">0</td>
                         </tr>
                     </thead>
-                    <tbody id="historyTableBody">
-                        <!-- JavaScriptでモック（または本番）データを挿入 -->
-                    </tbody>
+                    <tbody id="historyTableBody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- 下部アクションボタンエリア -->
         <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12">
             <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
                 <button onclick="alert('期間選択機能は実装待ちです')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
@@ -133,8 +125,50 @@
                 </button>
             </div>
             <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span>2026/11/06</span>
-                <span>ver0.0.8</span>
+                <span>2026/11/09</span>
+                <span>ver0.0.9</span>
+            </div>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 4. 日付対局者設定画面（新規追加） -->
+    <!-- ========================================== -->
+    <div id="inputScreen" class="screen-hidden">
+        <div class="w-full max-w-md flex-grow">
+            <!-- 画面タイトル -->
+            <header class="mb-6 text-left">
+                <h2 class="text-xl font-bold tracking-wider text-gray-800">日付対局者設定画面</h2>
+            </header>
+
+            <!-- 日付入力欄 (画像デザインを再現したグレーの背景) -->
+            <div class="mb-10 text-left">
+                <input 
+                    type="text" 
+                    value="2026/11/09" 
+                    class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm text-center tracking-wider max-w-[180px] focus:outline-none"
+                    placeholder="yyyy/mm/dd"
+                >
+            </div>
+
+            <!-- 対局者名リスト (2列のチェックボックス形式) -->
+            <div id="selectorPlayerList" class="grid grid-cols-2 gap-x-8 gap-y-6 max-w-xs mx-auto md:max-w-md pl-2">
+                <!-- JavaScriptで動的にチェックボックス行を生成 -->
+            </div>
+        </div>
+
+        <!-- 下部アクションボタンエリア (右寄りの配置) -->
+        <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
+            <div class="flex justify-end w-full max-w-xs mx-auto md:max-w-md">
+                <button onclick="handleInputOk()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    OK
+                </button>
+            </div>
+            
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
+                <span>2026/11/09</span>
+                <span>ver0.0.9</span>
             </div>
         </footer>
     </div>
@@ -151,7 +185,6 @@
             { id: 4, name: 'プレイヤー4' }
         ];
 
-        // 過去データのサンプルモック（画像のデザインを再現）
         const sampleScores = [
             { date: '2026/11/01', scores: ['0', '-123', '+57', '+66'] },
             { date: '2026/11/02', scores: ['+66', '0', '-123', '+57'] },
@@ -168,11 +201,13 @@
             const menu = document.getElementById('menuScreen');
             const management = document.getElementById('managementScreen');
             const dataScreen = document.getElementById('dataScreen');
+            const inputScreen = document.getElementById('inputScreen');
 
             // 全て一旦非表示
             menu.className = "screen-hidden";
             management.className = "screen-hidden";
             dataScreen.className = "screen-hidden";
+            inputScreen.className = "screen-hidden";
 
             if (screenName === 'management') {
                 management.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
@@ -182,14 +217,14 @@
             } else if (screenName === 'data') {
                 dataScreen.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
                 renderDataScreen();
-            } else {
-                alert(`${screenName} 画面は実装待ちです。`);
-                menu.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+            } else if (screenName === 'input') {
+                inputScreen.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                renderInputScreen();
             }
             window.scrollTo(0, 0);
         }
 
-        // 对局者管理のレンダリング
+        // 対局者管理のレンダリング
         function renderPlayers() {
             const listContainer = document.getElementById('playerList');
             listContainer.innerHTML = '';
@@ -219,17 +254,15 @@
 
         // 過去データ画面のレンダリング
         function renderDataScreen() {
-            // 登録されているプレイヤー名をテーブルヘッダーに反映 (最大4名分)
             for (let i = 1; i <= 4; i++) {
-                const th = document.getElementById(`th-p\${i}`);
+                const th = document.getElementById(`th-p${i}`);
                 if (players[i - 1]) {
                     th.innerText = players[i - 1].name;
                 } else {
-                    th.innerText = `氏名\${i}`;
+                    th.innerText = `氏名${i}`;
                 }
             }
 
-            // スコア行の生成
             const tbody = document.getElementById('historyTableBody');
             tbody.innerHTML = '';
 
@@ -237,14 +270,12 @@
                 const tr = document.createElement('tr');
                 tr.className = "border-b border-gray-400";
 
-                // 日付セル
-                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">\${row.date}</td>`;
+                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">${row.date}</td>`;
                 
-                // 各プレイヤーのスコアセル (マイナス表記なら赤文字クラスを適用)
                 row.scores.forEach(score => {
                     const isNegative = score.startsWith('-');
                     const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
-                    html += `<td class="border-r border-gray-400 p-2 \${colorClass}">\${score}</td>`;
+                    html += `<td class="border-r border-gray-400 p-2 ${colorClass}">${score}</td>`;
                 });
 
                 tr.innerHTML = html;
@@ -252,9 +283,43 @@
             });
         }
 
+        // 日付対局者設定画面のレンダリング (新規追加)
+        function renderInputScreen() {
+            const container = document.getElementById('selectorPlayerList');
+            container.innerHTML = '';
+
+            // 画像の10マスデザインに合わせるため、登録プレイヤーが足りない場合は空のスロットを補う
+            const displayCount = Math.max(players.length, 10);
+
+            for (let i = 0; i < displayCount; i++) {
+                const player = players[i];
+                const playerName = player ? player.name : '対局者名';
+                
+                const item = document.createElement('div');
+                item.className = 'flex items-center gap-3 text-gray-800';
+                
+                // 画像スタイル風のカスタムチェックボックス構造
+                item.innerHTML = `
+                    <input 
+                        type="checkbox" 
+                        id="check-p-${i}" 
+                        ${player ? 'checked' : ''} 
+                        class="w-5 h-5 accent-gray-500 rounded-sm cursor-pointer"
+                    >
+                    <label for="check-p-${i}" class="cursor-pointer tracking-wider text-sm select-none">${playerName}</label>
+                `;
+                container.appendChild(item);
+            }
+        }
+
+        function handleInputOk() {
+            alert('設定を保存しました。次の入力ステップ（スコア入力など）へ進みます（実装待ち）');
+            showScreen('menu');
+        }
+
         function addPlayer() {
             const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
-            players.push({ id: newId, name: `プレイヤー\${newId}` });
+            players.push({ id: newId, name: `プレイヤー${newId}` });
             renderPlayers();
         }
 
