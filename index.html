@@ -19,11 +19,12 @@
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 min-h-screen m-0 p-0">
+<body class="bg-white text-gray-900 min-h-screen m-0 p-0" onload="initApp()">
 
+    <!-- 一括管理用スクリプト（ここで定義された値が全画面のフッターに自動反映されます） -->
     <script>
         const APP_UPDATE_DATE = '2026/11/09';
-        const APP_VERSION = 'ver0.0.10';
+        const APP_VERSION = 'ver0.0.12';
     </script>
 
     <!-- ========================================== -->
@@ -48,9 +49,8 @@
             </button>
         </main>
 
-        <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-            <span class="footer-date"></span>
-            <span class="footer-version"></span>
+        <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer">
+            <!-- JSで自動挿入 -->
         </footer>
     </div>
 
@@ -82,10 +82,7 @@
                     戻る
                 </button>
             </div>
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span class="footer-date"></span>
-                <span class="footer-version"></span>
-            </div>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer"></div>
         </footer>
     </div>
 
@@ -129,10 +126,7 @@
                     戻る
                 </button>
             </div>
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span class="footer-date"></span>
-                <span class="footer-version"></span>
-            </div>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer"></div>
         </footer>
     </div>
 
@@ -141,40 +135,139 @@
     <!-- 4. 日付対局者設定画面（入力画面） -->
     <!-- ========================================== -->
     <div id="inputScreen" class="screen-hidden">
-        <div class="w-full max-w-md flex-grow flex flex-col items-center">
-            <header class="mb-8 text-center w-full">
+        <div class="w-full max-w-xs flex-grow flex flex-col">
+            <header class="mb-8 text-center">
                 <h2 class="text-xl font-bold tracking-wider text-gray-800">日付対局者設定画面</h2>
             </header>
 
-            <div class="w-full max-w-xs flex flex-col items-start gap-6">
-                <!-- 日付選択エリア（修正対象箇所） -->
-                <div class="flex gap-2 items-center w-full">
-                    <div class="relative bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-sm shadow-sm transition-colors duration-200 w-36 text-center cursor-pointer overflow-hidden">
-                        <span id="dateLabel" class="block py-2 px-3 text-sm tracking-wider">2026/11/09</span>
-                        <input type="date" id="dateInput" onchange="handleDateChange(this.value)" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
-                    </div>
-                    <button onclick="setTodayDate()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-xs font-medium py-2 px-3 rounded-sm shadow-sm transition-colors duration-200">
-                        今日
-                    </button>
+            <!-- カレンダーUI連携 日付ボタンエリア -->
+            <div class="flex items-center gap-2 mb-8 justify-start">
+                <div class="relative bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium px-4 py-2 rounded-sm shadow-sm transition-colors border border-gray-400 cursor-pointer min-w-[140px] text-center">
+                    <span id="dateLabel">yyyy/mm/dd</span>
+                    <input type="date" id="dateInput" onchange="handleDateChange(this.value)" class="absolute inset-0 opacity-0 w-full h-full cursor-pointer">
                 </div>
+                <button onclick="setTodayDate()" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium px-3 py-2 rounded-sm shadow-sm text-sm border border-gray-400">
+                    今日
+                </button>
+            </div>
 
-                <!-- 対局者選択チェックボックスリスト（10マス） -->
-                <div id="checkboxContainer" class="grid grid-cols-2 gap-x-8 gap-y-4 w-full mt-4">
-                    <!-- JavaScriptで10名分のチェックボックスを動的生成 -->
-                </div>
+            <!-- 対局者選択チェックボックス（10マス） -->
+            <div id="checkboxContainer" class="grid grid-cols-2 gap-x-4 gap-y-4 mb-12">
+                <!-- JavaScriptで最大10名のチェックボックスを自動生成 -->
             </div>
         </div>
 
         <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
-            <div class="text-right w-full max-w-xs mx-auto md:max-w-md">
-                <button onclick="alert('OKが押されました（実装待ち）')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+            <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+                <button onclick="showScreen('result')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
                     OK
                 </button>
+                <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                    戻る
+                </button>
             </div>
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span class="footer-date"></span>
-                <span class="footer-version"></span>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer"></div>
+        </footer>
+    </div>
+
+
+    <!-- ========================================== -->
+    <!-- 5. 成績表示画面（新規追加画面） -->
+    <!-- ========================================== -->
+    <div id="resultScreen" class="screen-hidden">
+        <div class="w-full max-w-md flex-grow px-2">
+            <div class="text-left w-full mb-4 font-medium text-gray-800" id="resultDateLabel">yyyy/mm/dd</div>
+
+            <!-- 成績テーブル -->
+            <div class="border border-gray-400 bg-white shadow-sm mb-12">
+                <table class="w-full text-center border-collapse table-fixed">
+                    <thead>
+                        <tr class="border-b border-gray-400 bg-gray-50">
+                            <th class="border-r border-gray-400 p-2 font-medium w-16"></th>
+                            <th class="border-r border-gray-400 p-2 font-medium text-xs break-all">対局者名</th>
+                            <th class="border-r border-gray-400 p-2 font-medium text-xs break-all">対局者名</th>
+                            <th class="border-r border-gray-400 p-2 font-medium text-xs break-all">対局者名</th>
+                            <th class="p-2 font-medium text-xs break-all">対局者名</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 1回戦 -->
+                        <tr class="border-b border-gray-400">
+                            <td class="border-r border-gray-400 p-3 font-medium bg-gray-50">1</td>
+                            <td class="border-r border-gray-400 p-3 text-red-500 font-semibold">-16</td>
+                            <td class="border-r border-gray-400 p-3 text-gray-900 font-semibold">+33</td>
+                            <td class="border-r border-gray-400 p-3 text-red-500 font-semibold">-10</td>
+                            <td class="p-3 text-red-500 font-semibold">-7</td>
+                        </tr>
+                        <!-- 2回戦 -->
+                        <tr class="border-b border-gray-400">
+                            <td class="border-r border-gray-400 p-3 font-medium bg-gray-50">2</td>
+                            <td class="border-r border-gray-400 p-3 text-gray-900 font-semibold relative">
+                                +45
+                                <span class="absolute bottom-0 right-1 text-[10px] text-gray-500 scale-90">飛</span>
+                            </td>
+                            <td class="border-r border-gray-400 p-3 text-red-500 font-semibold relative">
+                                -34
+                                <span class="absolute bottom-0 left-1 text-[10px] text-red-400 scale-90 bg-red-50 px-0.5 rounded border border-red-200">鳥</span>
+                                <span class="absolute bottom-0 right-1 text-[10px] text-gray-500 scale-90">飛</span>
+                            </td>
+                            <td class="border-r border-gray-400 p-3 text-red-500 font-semibold">-22</td>
+                            <td class="p-3 text-gray-900 font-semibold">+11</td>
+                        </tr>
+                        <!-- 3回戦 -->
+                        <tr class="border-b border-gray-400">
+                            <td class="border-r border-gray-400 p-3 font-medium bg-gray-50">3</td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="p-3"></td>
+                        </tr>
+                        <!-- 4回戦 -->
+                        <tr class="border-b border-gray-400">
+                            <td class="border-r border-gray-400 p-3 font-medium bg-gray-50">4</td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="p-3"></td>
+                        </tr>
+                        <!-- チップ -->
+                        <tr class="border-b border-gray-400">
+                            <td class="border-r border-gray-400 p-3 text-xs bg-gray-50 leading-tight">チップ</td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="p-3"></td>
+                        </tr>
+                        <!-- 成績 -->
+                        <tr>
+                            <td class="border-r border-gray-400 p-3 text-xs bg-gray-50 leading-tight">成績</td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="border-r border-gray-400 p-3"></td>
+                            <td class="p-3"></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+        </div>
+
+        <!-- 下部メニューボタンエリア -->
+        <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
+            <div class="grid grid-cols-4 gap-2 w-full px-2 max-w-md">
+                <button onclick="alert('チップ機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm text-sm text-center tracking-wider">
+                    チップ
+                </button>
+                <button onclick="alert('入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm text-sm text-center tracking-wider">
+                    入力
+                </button>
+                <button onclick="alert('集計機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm text-sm text-center tracking-wider">
+                    集計
+                </button>
+                <button onclick="showScreen('menu')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm text-sm text-center tracking-wider">
+                    終了
+                </button>
+            </div>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer"></div>
         </footer>
     </div>
 
@@ -198,36 +291,63 @@
 
         let players = JSON.parse(localStorage.getItem('mahjong_players')) || defaultPlayers;
 
-        // フッター表記の自動一括反映
-        document.querySelectorAll('.footer-date').forEach(el => el.innerText = APP_UPDATE_DATE);
-        document.querySelectorAll('.footer-version').forEach(el => el.innerText = APP_VERSION);
+        // アプリ初期化
+        function initApp() {
+            // フッター情報の一括インジェクション
+            const footers = document.querySelectorAll('.app-footer');
+            footers.forEach(f => {
+                f.innerHTML = `<span>\${APP_UPDATE_DATE}</span><span>\${APP_VERSION}</span>`;
+            });
+            
+            // 日付の初期設定
+            setTodayDate();
+            renderCheckboxes();
+        }
 
+        // 日付を今日に設定
+        function setTodayDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            
+            const dateStr = `\${yyyy}-\${mm}-\${dd}`;
+            document.getElementById('dateInput').value = dateStr;
+            handleDateChange(dateStr);
+        }
+
+        // 日付変更時のラベル反映
+        function handleDateChange(val) {
+            if (!val) return;
+            const parts = val.split('-');
+            const formatted = `\${parts[0]}/\${parts[1]}/\${parts[2]}`;
+            document.getElementById('dateLabel').innerText = formatted;
+            document.getElementById('resultDateLabel').innerText = formatted;
+        }
+
+        // 画面切り替え制御
         function showScreen(screenName) {
-            const menu = document.getElementById('menuScreen');
-            const management = document.getElementById('managementScreen');
-            const dataScreen = document.getElementById('dataScreen');
-            const inputScreen = document.getElementById('inputScreen');
-
-            menu.className = "screen-hidden";
-            management.className = "screen-hidden";
-            dataScreen.className = "screen-hidden";
-            inputScreen.className = "screen-hidden";
+            const screens = ['menuScreen', 'managementScreen', 'dataScreen', 'inputScreen', 'resultScreen'];
+            screens.forEach(s => document.getElementById(s).className = "screen-hidden");
 
             if (screenName === 'management') {
-                management.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                document.getElementById('managementScreen').className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
                 renderPlayers();
             } else if (screenName === 'menu') {
-                menu.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                document.getElementById('menuScreen').className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
             } else if (screenName === 'data') {
-                dataScreen.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                document.getElementById('dataScreen').className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
                 renderDataScreen();
             } else if (screenName === 'input') {
-                inputScreen.className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
-                initInputScreen();
+                document.getElementById('inputScreen').className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
+                renderCheckboxes();
+            } else if (screenName === 'result') {
+                document.getElementById('resultScreen').className = "w-full min-h-screen flex flex-col justify-between items-center py-16 px-4";
             }
             window.scrollTo(0, 0);
         }
 
+        // 対局者管理のレンダリング
         function renderPlayers() {
             const listContainer = document.getElementById('playerList');
             listContainer.innerHTML = '';
@@ -235,12 +355,12 @@
                 const row = document.createElement('div');
                 row.className = 'grid grid-cols-12 gap-2 items-center';
                 row.innerHTML = `
-                    <div class="col-span-2 pl-2 text-gray-700 font-medium">${index + 1}</div>
+                    <div class="col-span-2 pl-2 text-gray-700 font-medium">\${index + 1}</div>
                     <div class="col-span-6">
-                        <input type="text" value="${player.name}" onchange="updatePlayerName(${player.id}, this.value)" class="w-full bg-green-50 border border-transparent focus:border-green-300 focus:bg-white focus:outline-none px-3 py-2 text-gray-800 rounded-sm">
+                        <input type="text" value="\${player.name}" onchange="updatePlayerName(\${player.id}, this.value)" class="w-full bg-green-50 border border-transparent focus:border-green-300 focus:bg-white focus:outline-none px-3 py-2 text-gray-800 rounded-sm">
                     </div>
                     <div class="col-span-4 text-right">
-                        <button onclick="deletePlayer(${player.id})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider">削除</button>
+                        <button onclick="deletePlayer(\${player.id})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm text-sm">削除</button>
                     </div>
                 `;
                 listContainer.appendChild(row);
@@ -248,77 +368,54 @@
             localStorage.setItem('mahjong_players', JSON.stringify(players));
         }
 
-        function renderDataScreen() {
-            for (let i = 1; i <= 4; i++) {
-                const th = document.getElementById(`th-p${i}`);
-                if (players[i - 1]) {
-                    th.innerText = players[i - 1].name;
-                } else {
-                    th.innerText = `氏名${i}`;
-                }
-            }
-            const tbody = document.getElementById('historyTableBody');
-            tbody.innerHTML = '';
-            sampleScores.forEach(row => {
-                const tr = document.createElement('tr');
-                tr.className = "border-b border-gray-400";
-                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">${row.date}</td>`;
-                row.scores.forEach(score => {
-                    const isNegative = score.startsWith('-');
-                    const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
-                    html += `<td class="border-r border-gray-400 p-2 ${colorClass}">${score}</td>`;
-                });
-                tr.innerHTML = html;
-                tbody.appendChild(tr);
-            });
-        }
-
-        // 入力画面の日付初期化・制御ロジック
-        function initInputScreen() {
-            setTodayDate();
-            renderCheckboxes();
-        }
-
-        function setTodayDate() {
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            
-            const dateString = `${yyyy}-${mm}-${dd}`;
-            document.getElementById('dateInput').value = dateString;
-            handleDateChange(dateString);
-        }
-
-        function handleDateChange(val) {
-            if (!val) return;
-            const parts = val.split('-');
-            if (parts.length === 3) {
-                document.getElementById('dateLabel').innerText = `${parts[0]}/${parts[1]}/${parts[2]}`;
-            }
-        }
-
+        // 入力画面のチェックボックス（10個の枠）
         function renderCheckboxes() {
             const container = document.getElementById('checkboxContainer');
             container.innerHTML = '';
             
             for (let i = 0; i < 10; i++) {
                 const player = players[i];
-                const playerName = player ? player.name : `対局者${i + 1}`;
+                const nameText = player ? player.name : '';
                 
-                const wrapper = document.createElement('label');
-                wrapper.className = 'flex items-center gap-3 cursor-pointer select-none text-gray-800 font-medium';
+                const wrapper = document.createElement('div');
+                wrapper.className = "flex items-center gap-2 border border-gray-300 p-2 rounded-sm bg-gray-50 h-12";
                 wrapper.innerHTML = `
-                    <input type="checkbox" class="w-4 h-4 rounded-sm border-gray-400 text-indigo-600 focus:ring-indigo-500">
-                    <span class="truncate">${playerName}</span>
+                    <input type="checkbox" class="w-4 h-4 accent-indigo-600" \${player ? '' : 'disabled'}>
+                    <span class="text-sm text-gray-800 truncate">\${nameText}</span>
                 `;
                 container.appendChild(wrapper);
             }
         }
 
+        // 過去データ画面のレンダリング
+        function renderDataScreen() {
+            for (let i = 1; i <= 4; i++) {
+                const th = document.getElementById(`th-p\${i}`);
+                if (players[i - 1]) th.innerText = players[i - 1].name;
+                else th.innerText = `氏名\${i}`;
+            }
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            sampleScores.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-gray-400";
+                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">\${row.date}</td>`;
+                row.scores.forEach(score => {
+                    const isNegative = score.startsWith('-');
+                    html += `<td class="border-r border-gray-400 p-2 \${isNegative ? 'text-red-500' : 'text-gray-900'}">\${score}</td>`;
+                });
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+        }
+
         function addPlayer() {
+            if (players.length >= 10) {
+                alert('対局者は最大10名までです。');
+                return;
+            }
             const newId = players.length > 0 ? Math.max(...players.map(p => p.id)) + 1 : 1;
-            players.push({ id: newId, name: `プレイヤー${newId}` });
+            players.push({ id: newId, name: `プレイヤー\${newId}` });
             renderPlayers();
         }
 
