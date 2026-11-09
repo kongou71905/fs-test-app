@@ -4,20 +4,15 @@
 # 設計内容
 
 ## 画面設計
-- モード選択画面<br>
-https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=0-1&t=JbKuXWjJjfHwaJ14-1
-- 対局者管理画面<br>
-https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=3315-16&t=JbKuXWjJjfHwaJ14-1
-- 過去データ画面<br>
-https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=3323-116&t=JbKuXWjJjfHwaJ14-1
-- 日付対局者設定画面<br>
-url
-- 成績表示画面<br>
-url
-- 成績入力画面<br>
-url
-- チップ入力画面<br>
-url
+- モード選択画面
+- 対局者管理画面
+- 過去データ画面
+- 日付対局者設定画面
+- 成績表示画面
+- 成績入力画面
+- チップ入力画面
+※各画面イメージはFigmaを参照。<br>
+https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=0-1&t=hlbTDBxlCdcKyZUx-1
 
 ## URL設計（未着手）
 - /login
