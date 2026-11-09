@@ -21,6 +21,12 @@
 </head>
 <body class="bg-white text-gray-900 min-h-screen m-0 p-0">
 
+    <!-- バージョンと日付の一括管理設定（一箇所のみ） -->
+    <script>
+        const APP_UPDATE_DATE = '2026/11/06';
+        const APP_VERSION = 'ver0.0.9';
+    </script>
+
     <!-- ========================================== -->
     <!-- 1. モード選択画面（トップ画面） -->
     <!-- ========================================== -->
@@ -43,9 +49,8 @@
             </button>
         </main>
 
-        <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-            <span>2026/11/09</span>
-            <span>ver0.0.9</span>
+        <footer class="w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer">
+            <!-- JavaScriptで一元挿入されます -->
         </footer>
     </div>
 
@@ -77,9 +82,8 @@
                     戻る
                 </button>
             </div>
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span>2026/11/09</span>
-                <span>ver0.0.9</span>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer">
+                <!-- JavaScriptで一元挿入されます -->
             </div>
         </footer>
     </div>
@@ -124,51 +128,43 @@
                     戻る
                 </button>
             </div>
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span>2026/11/09</span>
-                <span>ver0.0.9</span>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer">
+                <!-- JavaScriptで一元挿入されます -->
             </div>
         </footer>
     </div>
 
 
     <!-- ========================================== -->
-    <!-- 4. 日付対局者設定画面（新規追加） -->
+    <!-- 4. 日付対局者設定画面 (ver0.0.9仕様) -->
     <!-- ========================================== -->
     <div id="inputScreen" class="screen-hidden">
-        <div class="w-full max-w-md flex-grow">
-            <!-- 画面タイトル -->
-            <header class="mb-6 text-left">
+        <div class="w-full max-w-md flex-grow px-4">
+            <header class="mb-8 text-center">
                 <h2 class="text-xl font-bold tracking-wider text-gray-800">日付対局者設定画面</h2>
             </header>
 
-            <!-- 日付入力欄 (画像デザインを再現したグレーの背景) -->
-            <div class="mb-10 text-left">
-                <input 
-                    type="text" 
-                    value="2026/11/09" 
-                    class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm text-center tracking-wider max-w-[180px] focus:outline-none"
-                    placeholder="yyyy/mm/dd"
-                >
+            <div class="max-w-xs mx-auto mb-8">
+                <button class="bg-gray-200 border border-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm text-center block w-full tracking-wider">
+                    yyyy/mm/dd
+                </button>
             </div>
 
-            <!-- 対局者名リスト (2列のチェックボックス形式) -->
-            <div id="selectorPlayerList" class="grid grid-cols-2 gap-x-8 gap-y-6 max-w-xs mx-auto md:max-w-md pl-2">
-                <!-- JavaScriptで動的にチェックボックス行を生成 -->
+            <!-- 10マスのチェックボックス枠 -->
+            <div id="checkboxContainer" class="grid grid-cols-2 gap-x-8 gap-y-4 max-w-xs mx-auto mb-12">
+                <!-- JavaScriptで10名分を動的に生成（プレイヤー名連動） -->
             </div>
         </div>
 
-        <!-- 下部アクションボタンエリア (右寄りの配置) -->
         <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
-            <div class="flex justify-end w-full max-w-xs mx-auto md:max-w-md">
-                <button onclick="handleInputOk()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+            <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+                <div class="w-1/2"></div> <!-- 左側の余白用空要素 -->
+                <button onclick="showScreen('menu')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
                     OK
                 </button>
             </div>
-            
-            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4">
-                <span>2026/11/09</span>
-                <span>ver0.0.9</span>
+            <div class="text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4 app-footer">
+                <!-- JavaScriptで一元挿入されます -->
             </div>
         </footer>
     </div>
@@ -197,13 +193,20 @@
 
         let players = JSON.parse(localStorage.getItem('mahjong_players')) || defaultPlayers;
 
+        // フッター表記を一括反映する初期化処理
+        function initFooters() {
+            const footers = document.querySelectorAll('.app-footer');
+            footers.forEach(f => {
+                f.innerHTML = `<span>${APP_UPDATE_DATE}</span><span>${APP_VERSION}</span>`;
+            });
+        }
+
         function showScreen(screenName) {
             const menu = document.getElementById('menuScreen');
             const management = document.getElementById('managementScreen');
             const dataScreen = document.getElementById('dataScreen');
             const inputScreen = document.getElementById('inputScreen');
 
-            // 全て一旦非表示
             menu.className = "screen-hidden";
             management.className = "screen-hidden";
             dataScreen.className = "screen-hidden";
@@ -224,7 +227,6 @@
             window.scrollTo(0, 0);
         }
 
-        // 対局者管理のレンダリング
         function renderPlayers() {
             const listContainer = document.getElementById('playerList');
             listContainer.innerHTML = '';
@@ -252,7 +254,6 @@
             localStorage.setItem('mahjong_players', JSON.stringify(players));
         }
 
-        // 過去データ画面のレンダリング
         function renderDataScreen() {
             for (let i = 1; i <= 4; i++) {
                 const th = document.getElementById(`th-p${i}`);
@@ -271,7 +272,6 @@
                 tr.className = "border-b border-gray-400";
 
                 let html = `<td class="border-r border-gray-400 p-2 text-gray-600">${row.date}</td>`;
-                
                 row.scores.forEach(score => {
                     const isNegative = score.startsWith('-');
                     const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
@@ -283,38 +283,23 @@
             });
         }
 
-        // 日付対局者設定画面のレンダリング (新規追加)
         function renderInputScreen() {
-            const container = document.getElementById('selectorPlayerList');
+            const container = document.getElementById('checkboxContainer');
             container.innerHTML = '';
 
-            // 画像の10マスデザインに合わせるため、登録プレイヤーが足りない場合は空のスロットを補う
-            const displayCount = Math.max(players.length, 10);
-
-            for (let i = 0; i < displayCount; i++) {
+            // 10名分の枠を生成
+            for (let i = 0; i < 10; i++) {
                 const player = players[i];
-                const playerName = player ? player.name : '対局者名';
+                const playerName = player ? player.name : `対局者${i + 1}`;
                 
                 const item = document.createElement('div');
-                item.className = 'flex items-center gap-3 text-gray-800';
-                
-                // 画像スタイル風のカスタムチェックボックス構造
+                item.className = 'flex items-center gap-3';
                 item.innerHTML = `
-                    <input 
-                        type="checkbox" 
-                        id="check-p-${i}" 
-                        ${player ? 'checked' : ''} 
-                        class="w-5 h-5 accent-gray-500 rounded-sm cursor-pointer"
-                    >
-                    <label for="check-p-${i}" class="cursor-pointer tracking-wider text-sm select-none">${playerName}</label>
+                    <input type="checkbox" id="check-p${i}" class="w-4 h-4 rounded-sm border-gray-400 text-indigo-600 focus:ring-indigo-500">
+                    <label for="check-p${i}" class="text-sm font-medium text-gray-800 select-none">${playerName}</label>
                 `;
                 container.appendChild(item);
             }
-        }
-
-        function handleInputOk() {
-            alert('設定を保存しました。次の入力ステップ（スコア入力など）へ進みます（実装待ち）');
-            showScreen('menu');
         }
 
         function addPlayer() {
@@ -335,6 +320,9 @@
                 localStorage.setItem('mahjong_players', JSON.stringify(players));
             }
         }
+
+        // 初期化実行
+        initFooters();
     </script>
 </body>
 </html>
