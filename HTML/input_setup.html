@@ -14,17 +14,28 @@
         </header>
 
         <div class="mb-10 flex items-center gap-3">
-            <input type="date" id="gameDateInput" class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm focus:outline-none cursor-pointer">
-            <button type="button" onclick="setTodayDate()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm py-2 px-3 rounded-sm transition-colors">今日</button>
+            <input 
+                type="date" 
+                id="gameDateInput" 
+                class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm focus:outline-none cursor-pointer"
+            >
+            <button 
+                type="button" 
+                onclick="setTodayDate()" 
+                class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm py-2 px-3 rounded-sm transition-colors"
+            >
+                今日
+            </button>
         </div>
 
         <div id="playerCheckboxes" class="grid grid-cols-2 gap-y-8 gap-x-6"></div>
     </div>
 
     <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12 px-4">
-        <div class="w-full flex justify-between gap-8">
-            <a href="../index.html" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest block">戻る</a>
-            <button onclick="validateAndProceedToScore()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">OK</button>
+        <div class="w-full flex justify-end">
+            <button onclick="validateAndProceedToScore()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                OK
+            </button>
         </div>
         <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
     </footer>
