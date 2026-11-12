@@ -3,45 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>日付対局者設定画面 - 麻雀成績管理ツール</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+    <title>日付対局者設定 - 麻雀成績管理ツール</title>
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
-
     <div class="w-full max-w-md flex-grow px-4">
         <header class="mb-6">
             <h2 class="text-xl font-bold tracking-wider text-gray-800">日付対局者設定画面</h2>
         </header>
 
         <div class="mb-10 flex items-center gap-3">
-            <input 
-                type="date" 
-                id="gameDateInput" 
-                class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm focus:outline-none cursor-pointer"
-            >
-            <button 
-                type="button" 
-                onclick="setTodayDate()" 
-                class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm py-2 px-3 rounded-sm transition-colors"
-            >
-                今日
-            </button>
+            <input type="date" id="gameDateInput" class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm focus:outline-none cursor-pointer">
+            <button type="button" onclick="setTodayDate()" class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm py-2 px-3 rounded-sm transition-colors">今日</button>
         </div>
 
         <div id="playerCheckboxes" class="grid grid-cols-2 gap-y-8 gap-x-6"></div>
     </div>
 
     <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12 px-4">
-        <div class="w-full flex justify-end">
-            <button onclick="validateAndProceedToScore()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
-                OK
-            </button>
+        <div class="w-full flex justify-between gap-8">
+            <a href="../index.html" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest block">戻る</a>
+            <button onclick="validateAndProceedToScore()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">OK</button>
         </div>
         <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
     </footer>
 
-    <script src="common.js"></script>
+    <script src="../JavaScript/common.js"></script>
     <script>
         function setTodayDate() {
             const today = new Date();
@@ -75,9 +63,8 @@
                 return;
             }
             const selectedNames = Array.from(checkedBoxes).map(cb => cb.value);
-            const dateVal = document.getElementById('gameDateInput').value;
-            sessionStorage.setItem('mahjong_game_date', dateVal);
-            sessionStorage.setItem('mahjong_selected_players', JSON.stringify(selectedNames));
+            sessionStorage.setItem('current_game_date', document.getElementById('gameDateInput').value);
+            sessionStorage.setItem('current_game_players', JSON.stringify(selectedNames));
             window.location.href = 'score.html';
         }
 
