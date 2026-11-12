@@ -5,7 +5,7 @@
     document.head.appendChild(script);
 })();
 
-const APP_VERSION = 'ver0.0.23';
+const APP_VERSION = 'ver0.0.24';
 const APP_UPDATE_DATE = '2026/11/12';
 
 const defaultPlayers = [
