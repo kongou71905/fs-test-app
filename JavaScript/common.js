@@ -1,4 +1,4 @@
-const APP_VERSION = 'ver0.0.24';
+const APP_VERSION = 'ver0.0.25';
 const APP_UPDATE_DATE = '2026/11/12';
 
 const defaultPlayers = [
