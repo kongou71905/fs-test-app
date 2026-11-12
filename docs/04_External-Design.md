@@ -15,10 +15,20 @@
 ※各画面イメージはFigmaを参照。<br>
 https://www.figma.com/design/pN2gUer9DTsfO7IPXrZ35g/fodefogem-fig%E3%81%AE%E3%83%81%E3%83%BC%E3%83%A0-team-library?node-id=0-1&t=hlbTDBxlCdcKyZUx-1
 
-## URL設計（未着手）
-- /login
-- /ticket/list
-- /ticket/detail
+## フォルダ構成
+```
+/
+├── CSS/
+│   └── style.css
+├── HTML/
+│   ├── data.html
+│   ├── input_setup.html
+│   ├── management.html
+│   └── score.html
+├── JavaScript/
+│   └── common.js
+└── index.html
+```
 
 ## データ設計（未着手）
  例えば
