@@ -9,13 +9,23 @@
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
     <header class="w-full text-center max-w-md pt-8">
-        <h1 class="text-xl font-bold tracking-wider text-gray-800">麻雀成績管理ツール</h1>
+        <h1 class="text-xl font-bold tracking-wider text-gray-800">
+            麻雀成績管理ツール
+        </h1>
     </header>
+
     <main class="w-full max-w-xs flex flex-col gap-12 my-auto">
-        <a href="HTML/management.html" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center block">管理</a>
-        <a href="HTML/data.html" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center block">データ</a>
-        <a href="HTML/input_setup.html" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center block">入力</a>
+        <button onclick="location.href='HTML/management.html'" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+            管理
+        </button>
+        <button onclick="location.href='HTML/data.html'" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+            データ
+        </button>
+        <button onclick="location.href='HTML/input_setup.html'" class="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-4 px-6 rounded-sm shadow-sm transition-colors duration-200 tracking-widest text-center">
+            入力
+        </button>
     </main>
+
     <footer class="app-footer w-full text-center max-w-md text-sm text-gray-600 tracking-wide flex justify-center gap-4"></footer>
     <script src="JavaScript/common.js"></script>
 </body>
