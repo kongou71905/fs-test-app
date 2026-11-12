@@ -13,17 +13,19 @@
             <h2 class="text-xl font-bold tracking-wider text-gray-800">対局者管理画面</h2>
         </header>
 
-        <div class="grid grid-cols-12 gap-2 mb-4 text-gray-700 font-medium max-w-xs mx-auto md:max-w-md">
-            <div class="col-span-2 pl-2">ID</div>
-            <div class="col-span-6">対局者名</div>
-            <div class="col-span-4"></div>
+        <!-- テーブルヘッダー（横1列レイアウト） -->
+        <div class="flex items-center gap-3 mb-4 text-gray-700 font-medium w-full max-w-sm mx-auto">
+            <div class="w-8 text-center shrink-0">ID</div>
+            <div class="flex-1">対局者名</div>
+            <div class="w-16 shrink-0"></div>
         </div>
 
-        <div id="playerList" class="flex flex-col gap-4 max-w-xs mx-auto md:max-w-md"></div>
+        <!-- 対局者リスト（1人ごとに横1列で表示） -->
+        <div id="playerList" class="flex flex-col gap-4 w-full max-w-sm mx-auto"></div>
     </div>
 
-    <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-auto">
-        <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+    <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12">
+        <div class="flex justify-between gap-8 w-full max-w-sm mx-auto">
             <button onclick="addPlayer()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
                 追加
             </button>
@@ -44,10 +46,10 @@
 
             players.forEach((player, index) => {
                 const row = document.createElement('div');
-                row.className = 'grid grid-cols-12 gap-2 items-center';
+                row.className = 'flex items-center gap-3 w-full';
                 row.innerHTML = `
-                    <div class="col-span-2 pl-2 text-gray-700 font-medium">${index + 1}</div>
-                    <div class="col-span-6">
+                    <div class="w-8 text-center text-gray-700 font-medium shrink-0">${index + 1}</div>
+                    <div class="flex-1 min-w-0">
                         <input 
                             type="text" 
                             value="${player.name}" 
@@ -56,8 +58,10 @@
                             placeholder="名前を入力"
                         >
                     </div>
-                    <div class="col-span-4 text-right">
-                        <button onclick="deletePlayer(${player.id})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider">削除</button>
+                    <div class="shrink-0">
+                        <button onclick="deletePlayer(${player.id})" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm transition-colors duration-200 text-sm tracking-wider whitespace-nowrap">
+                            削除
+                        </button>
                     </div>
                 `;
                 listContainer.appendChild(row);
