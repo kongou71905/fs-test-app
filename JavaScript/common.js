@@ -1,4 +1,4 @@
-const APP_VERSION = 'ver0.0.18';
+const APP_VERSION = 'ver0.0.19';
 const APP_UPDATE_DATE = '2026/11/12';
 
 const defaultPlayers = [
@@ -9,7 +9,7 @@ const defaultPlayers = [
 ];
 
 function getPlayers() {
-    return JSON.parse(localStorage.getItem('mahjong_players')) || defaultPlayers;
+    return JSON.parse(localStorage.getItem('mahjong_players')) || [...defaultPlayers];
 }
 
 function savePlayers(players) {
