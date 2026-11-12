@@ -1,10 +1,3 @@
-// Tailwind CSS の動的読み込み（共通化）
-(function loadTailwind() {
-    const script = document.createElement('script');
-    script.src = 'https://cdn.tailwindcss.com';
-    document.head.appendChild(script);
-})();
-
 const APP_VERSION = 'ver0.0.24';
 const APP_UPDATE_DATE = '2026/11/12';
 
