@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>成績表示 - 麻雀成績管理ツール</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="https://tailwindcss.com"></script>
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
 <body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-12 px-4">
-
     <div class="w-full max-w-md flex-grow px-2">
         <div class="flex justify-between items-end mb-4 px-1">
             <div id="scoreScreenDate" class="text-gray-800 font-medium tracking-wide">yyyy/mm/dd</div>
@@ -50,34 +49,10 @@
                         <td class="border-r border-gray-500 text-red-500 font-medium">-22</td>
                         <td class="text-gray-900 font-medium">+11</td>
                     </tr>
-                    <tr class="border-b border-gray-500 h-16">
-                        <td class="border-r border-gray-500 text-base text-gray-700">3</td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td></td>
-                    </tr>
-                    <tr class="border-b border-gray-500 h-16">
-                        <td class="border-r border-gray-500 text-base text-gray-700">4</td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td></td>
-                    </tr>
-                    <tr class="border-b border-gray-500 h-16">
-                        <td class="border-r border-gray-500 text-xs leading-tight text-gray-700 py-1">チ<br>ッ<br>プ</td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td></td>
-                    </tr>
-                    <tr class="h-16">
-                        <td class="border-r border-gray-500 text-sm leading-tight text-gray-700 py-1">成<br>績</td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td class="border-r border-gray-500"></td>
-                        <td></td>
-                    </tr>
+                    <tr class="border-b border-gray-500 h-16"><td class="border-r border-gray-500 text-base text-gray-700">3</td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td></td></tr>
+                    <tr class="border-b border-gray-500 h-16"><td class="border-r border-gray-500 text-base text-gray-700">4</td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td></td></tr>
+                    <tr class="border-b border-gray-500 h-16"><td class="border-r border-gray-500 text-xs leading-tight text-gray-700 py-1">チ<br>ッ<br>プ</td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td></td></tr>
+                    <tr class="h-16"><td class="border-r border-gray-500 text-sm leading-tight text-gray-700 py-1">成<br>績</td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td class="border-r border-gray-500"></td><td></td></tr>
                 </tbody>
             </table>
         </div>
@@ -85,29 +60,21 @@
 
     <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-10 px-2">
         <div class="grid grid-cols-4 gap-3 w-full">
-            <button onclick="alert('チップ入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
-                チップ
-            </button>
-            <button onclick="alert('スコア入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
-                入力
-            </button>
-            <button onclick="alert('集計機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
-                集計
-            </button>
-            <a href="index.html" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider block">
-                終了
-            </a>
+            <button onclick="alert('チップ入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">チップ</button>
+            <button onclick="alert('スコア入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">入力</button>
+            <button onclick="alert('集計機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">集計</button>
+            <a href="../index.html" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider block">終了</a>
         </div>
         <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
     </footer>
 
-    <script src="common.js"></script>
+    <script src="../JavaScript/common.js"></script>
     <script>
         function setupScoreScreen() {
-            const gameDate = sessionStorage.getItem('mahjong_current_date');
-            document.getElementById('scoreScreenDate').innerText = gameDate ? gameDate.replace(/-/g, '/') : 'yyyy/mm/dd';
+            const dateVal = sessionStorage.getItem('current_game_date');
+            document.getElementById('scoreScreenDate').innerText = dateVal ? dateVal.replace(/-/g, '/') : 'yyyy/mm/dd';
 
-            const selectedPlayers = JSON.parse(sessionStorage.getItem('mahjong_selected_players')) || [];
+            const selectedPlayers = JSON.parse(sessionStorage.getItem('current_game_players')) || [];
             for (let i = 1; i <= 4; i++) {
                 const th = document.getElementById(`score-th-${i}`);
                 th.innerText = selectedPlayers[i - 1] ? selectedPlayers[i - 1] : '対局者名';
