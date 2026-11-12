@@ -12,14 +12,14 @@
         <div class="text-left w-full mb-4 pl-2 font-medium text-gray-800">2026年</div>
 
         <div class="table-container border border-gray-400 bg-white">
-            <table class="w-full text-center border-collapse text-sm md:text-base">
+            <table class="table-fixed w-full text-center border-collapse text-sm md:text-base">
                 <thead>
                     <tr class="border-b border-gray-400">
-                        <th class="border-r border-gray-400 p-2 font-medium bg-gray-50 min-w-[100px]">対局者</th>
-                        <th id="th-p1" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
-                        <th id="th-p2" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
-                        <th id="th-p3" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
-                        <th id="th-p4" class="border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                        <th class="w-24 md:w-28 border-r border-gray-400 p-2 font-medium bg-gray-50">対局者</th>
+                        <th id="th-p1" class="border-r border-gray-400 p-1.5 font-medium break-all leading-snug">氏名</th>
+                        <th id="th-p2" class="border-r border-gray-400 p-1.5 font-medium break-all leading-snug">氏名</th>
+                        <th id="th-p3" class="border-r border-gray-400 p-1.5 font-medium break-all leading-snug">氏名</th>
+                        <th id="th-p4" class="p-1.5 font-medium break-all leading-snug">氏名</th>
                     </tr>
                     <tr class="border-b border-gray-400 bg-gray-50">
                         <td class="border-r border-gray-400 p-2 font-medium">成績</td>
@@ -58,11 +58,16 @@
             { date: '2026/11/06', scores: ['+57', '+66', '0', '-123'] }
         ];
 
+        function formatPlayerName(name) {
+            return name.length >= 5 ? name.match(/.{1,4}/g).join('\n') : name;
+        }
+
         function renderDataScreen() {
             const players = getPlayers();
             for (let i = 1; i <= 4; i++) {
                 const th = document.getElementById(`th-p${i}`);
-                th.innerText = players[i - 1] ? players[i - 1].name : `氏名${i}`;
+                const rawName = players[i - 1] ? players[i - 1].name : `氏名${i}`;
+                th.innerText = formatPlayerName(rawName);
             }
 
             const tbody = document.getElementById('historyTableBody');
@@ -73,10 +78,11 @@
                 tr.className = "border-b border-gray-400";
                 let html = `<td class="border-r border-gray-400 p-2 text-gray-600">${row.date}</td>`;
                 
-                row.scores.forEach(score => {
+                row.scores.forEach((score, idx) => {
                     const isNegative = score.startsWith('-');
                     const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
-                    html += `<td class="border-r border-gray-400 p-2 ${colorClass}">${score}</td>`;
+                    const borderClass = idx < row.scores.length - 1 ? 'border-r border-gray-400 ' : '';
+                    html += `<td class="${borderClass}p-2 ${colorClass}">${score}</td>`;
                 });
 
                 tr.innerHTML = html;
