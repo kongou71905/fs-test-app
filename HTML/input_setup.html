@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日付対局者設定画面 - 麻雀成績管理ツール</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
+
+    <div class="w-full max-w-md flex-grow px-4">
+        <header class="mb-6">
+            <h2 class="text-xl font-bold tracking-wider text-gray-800">日付対局者設定画面</h2>
+        </header>
+
+        <div class="mb-10 flex items-center gap-3">
+            <input 
+                type="date" 
+                id="gameDateInput" 
+                class="bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-sm shadow-sm focus:outline-none cursor-pointer"
+            >
+            <button 
+                type="button" 
+                onclick="setTodayDate()" 
+                class="bg-gray-200 hover:bg-gray-300 text-gray-700 text-sm py-2 px-3 rounded-sm transition-colors"
+            >
+                今日
+            </button>
+        </div>
+
+        <div id="playerCheckboxes" class="grid grid-cols-2 gap-y-8 gap-x-6"></div>
+    </div>
+
+    <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12 px-4">
+        <div class="w-full flex justify-end">
+            <button onclick="validateAndProceedToScore()" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                OK
+            </button>
+        </div>
+        <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script>
+        function setTodayDate() {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            document.getElementById('gameDateInput').value = `${yyyy}-${mm}-${dd}`;
+        }
+
+        function renderPlayerCheckboxes() {
+            const players = getPlayers();
+            const container = document.getElementById('playerCheckboxes');
+            container.innerHTML = '';
+
+            players.forEach((player, index) => {
+                const item = document.createElement('label');
+                item.className = 'flex items-center gap-3 cursor-pointer select-none';
+                const isChecked = index < 4 ? 'checked' : '';
+                item.innerHTML = `
+                    <input type="checkbox" name="selectedPlayer" value="${player.name}" ${isChecked} class="w-5 h-5 accent-gray-600 rounded-sm cursor-pointer">
+                    <span class="text-gray-800 font-medium">${player.name}</span>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function validateAndProceedToScore() {
+            const checkedBoxes = document.querySelectorAll('input[name="selectedPlayer"]:checked');
+            if (checkedBoxes.length < 4) {
+                alert('対局者を4人以上選択してください。');
+                return;
+            }
+            const selectedNames = Array.from(checkedBoxes).map(cb => cb.value);
+            const dateVal = document.getElementById('gameDateInput').value;
+            sessionStorage.setItem('mahjong_game_date', dateVal);
+            sessionStorage.setItem('mahjong_selected_players', JSON.stringify(selectedNames));
+            window.location.href = 'score.html';
+        }
+
+        setTodayDate();
+        renderPlayerCheckboxes();
+    </script>
+</body>
+</html>

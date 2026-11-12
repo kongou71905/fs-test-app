@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>過去データ画面 - 麻雀成績管理ツール</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-16 px-4">
+
+    <div class="w-full max-w-2xl flex-grow px-2">
+        <div class="text-left w-full mb-4 pl-2 font-medium text-gray-800">2026年</div>
+
+        <div class="table-container border border-gray-400 bg-white">
+            <table class="w-full text-center border-collapse text-sm md:text-base">
+                <thead>
+                    <tr class="border-b border-gray-400">
+                        <th class="border-r border-gray-400 p-2 font-medium bg-gray-50 min-w-[100px]">対局者</th>
+                        <th id="th-p1" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                        <th id="th-p2" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                        <th id="th-p3" class="border-r border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                        <th id="th-p4" class="border-gray-400 p-2 font-medium min-w-[70px]">氏名</th>
+                    </tr>
+                    <tr class="border-b border-gray-400 bg-gray-50">
+                        <td class="border-r border-gray-400 p-2 font-medium">成績</td>
+                        <td class="border-r border-gray-400 p-2 font-bold text-red-500">-123</td>
+                        <td class="border-r border-gray-400 p-2 font-bold text-gray-900">+57</td>
+                        <td class="border-r border-gray-400 p-2 font-bold text-gray-900">+66</td>
+                        <td class="p-2 font-bold text-gray-900">0</td>
+                    </tr>
+                </thead>
+                <tbody id="historyTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-12">
+        <div class="flex justify-between gap-8 w-full max-w-xs mx-auto md:max-w-md">
+            <button onclick="alert('期間選択機能は実装待ちです')" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest">
+                期間
+            </button>
+            <a href="index.html" class="w-1/2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-4 rounded-sm shadow-sm transition-colors duration-200 text-center tracking-widest block">
+                戻る
+            </a>
+        </div>
+        <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script>
+        const sampleScores = [
+            { date: '2026/11/01', scores: ['0', '-123', '+57', '+66'] },
+            { date: '2026/11/02', scores: ['+66', '0', '-123', '+57'] },
+            { date: '2026/11/03', scores: ['+57', '+66', '0', '-123'] },
+            { date: '2026/11/04', scores: ['-123', '+57', '+66', '0'] },
+            { date: '2026/11/05', scores: ['0', '-123', '+57', '+66'] },
+            { date: '2026/11/06', scores: ['+66', '0', '-123', '+57'] },
+            { date: '2026/11/06', scores: ['+57', '+66', '0', '-123'] }
+        ];
+
+        function renderDataScreen() {
+            const players = getPlayers();
+            for (let i = 1; i <= 4; i++) {
+                const th = document.getElementById(`th-p${i}`);
+                th.innerText = players[i - 1] ? players[i - 1].name : `氏名${i}`;
+            }
+
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            sampleScores.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.className = "border-b border-gray-400";
+                let html = `<td class="border-r border-gray-400 p-2 text-gray-600">${row.date}</td>`;
+                
+                row.scores.forEach(score => {
+                    const isNegative = score.startsWith('-');
+                    const colorClass = isNegative ? 'text-red-500' : 'text-gray-900';
+                    html += `<td class="border-r border-gray-400 p-2 ${colorClass}">${score}</td>`;
+                });
+
+                tr.innerHTML = html;
+                tbody.appendChild(tr);
+            });
+        }
+
+        renderDataScreen();
+    </script>
+</body>
+</html>

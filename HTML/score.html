@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成績表示 - 麻雀成績管理ツール</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-white text-gray-900 min-h-screen flex flex-col justify-between items-center py-12 px-4">
+
+    <div class="w-full max-w-md flex-grow px-2">
+        <div class="flex justify-between items-end mb-4 px-1">
+            <div id="scoreScreenDate" class="text-gray-800 font-medium tracking-wide">yyyy/mm/dd</div>
+            <div class="bg-gray-300 text-gray-800 text-xs font-medium py-1.5 px-4 text-center leading-tight rounded-sm">
+                日付<br>対局者
+            </div>
+        </div>
+
+        <div class="border border-gray-500 bg-white">
+            <table class="w-full text-center border-collapse">
+                <thead>
+                    <tr class="border-b border-gray-500">
+                        <th class="border-r border-gray-500 w-12 p-2"></th>
+                        <th id="score-th-1" class="border-r border-gray-500 p-2 font-medium text-sm">対局者名</th>
+                        <th id="score-th-2" class="border-r border-gray-500 p-2 font-medium text-sm">対局者名</th>
+                        <th id="score-th-3" class="border-r border-gray-500 p-2 font-medium text-sm">対局者名</th>
+                        <th id="score-th-4" class="p-2 font-medium text-sm">対局者名</th>
+                    </tr>
+                </thead>
+                <tbody class="text-lg">
+                    <tr class="border-b border-gray-500 h-16">
+                        <td class="border-r border-gray-500 text-base text-gray-700">1</td>
+                        <td class="border-r border-gray-500 text-red-500 font-medium">-16</td>
+                        <td class="border-r border-gray-500 text-gray-900 font-medium">+33</td>
+                        <td class="border-r border-gray-500 text-red-500 font-medium">-10</td>
+                        <td class="text-red-500 font-medium">-7</td>
+                    </tr>
+                    <tr class="border-b border-gray-500 h-16">
+                        <td class="border-r border-gray-500 text-base text-gray-700">2</td>
+                        <td class="border-r border-gray-500 relative">
+                            <span class="text-gray-900 font-medium">+45</span>
+                            <span class="absolute bottom-1 right-1 bg-gray-200 text-gray-700 text-[10px] px-1.5 py-0.5 rounded-full">飛</span>
+                        </td>
+                        <td class="border-r border-gray-500 relative">
+                            <span class="text-red-500 font-medium">-34</span>
+                            <span class="absolute bottom-1 left-1 bg-gray-200 text-red-500 text-[10px] px-1.5 py-0.5 rounded-full">鳥</span>
+                            <span class="absolute bottom-1 right-1 bg-gray-200 text-red-500 text-[10px] px-1.5 py-0.5 rounded-full">飛</span>
+                        </td>
+                        <td class="border-r border-gray-500 text-red-500 font-medium">-22</td>
+                        <td class="text-gray-900 font-medium">+11</td>
+                    </tr>
+                    <tr class="border-b border-gray-500 h-16">
+                        <td class="border-r border-gray-500 text-base text-gray-700">3</td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td></td>
+                    </tr>
+                    <tr class="border-b border-gray-500 h-16">
+                        <td class="border-r border-gray-500 text-base text-gray-700">4</td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td></td>
+                    </tr>
+                    <tr class="border-b border-gray-500 h-16">
+                        <td class="border-r border-gray-500 text-xs leading-tight text-gray-700 py-1">チ<br>ッ<br>プ</td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td></td>
+                    </tr>
+                    <tr class="h-16">
+                        <td class="border-r border-gray-500 text-sm leading-tight text-gray-700 py-1">成<br>績</td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td class="border-r border-gray-500"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer class="w-full max-w-md flex flex-col items-center gap-12 mt-10 px-2">
+        <div class="grid grid-cols-4 gap-3 w-full">
+            <button onclick="alert('チップ入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
+                チップ
+            </button>
+            <button onclick="alert('スコア入力機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
+                入力
+            </button>
+            <button onclick="alert('集計機能は実装待ちです')" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider">
+                集計
+            </button>
+            <a href="index.html" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-3 px-1 rounded-sm shadow-sm transition-colors duration-200 text-center text-sm tracking-wider block">
+                終了
+            </a>
+        </div>
+        <div class="app-footer text-center text-sm text-gray-600 tracking-wide flex justify-center gap-4"></div>
+    </footer>
+
+    <script src="common.js"></script>
+    <script>
+        function setupScoreScreen() {
+            const gameDate = sessionStorage.getItem('mahjong_current_date');
+            document.getElementById('scoreScreenDate').innerText = gameDate ? gameDate.replace(/-/g, '/') : 'yyyy/mm/dd';
+
+            const selectedPlayers = JSON.parse(sessionStorage.getItem('mahjong_selected_players')) || [];
+            for (let i = 1; i <= 4; i++) {
+                const th = document.getElementById(`score-th-${i}`);
+                th.innerText = selectedPlayers[i - 1] ? selectedPlayers[i - 1] : '対局者名';
+            }
+        }
+
+        setupScoreScreen();
+    </script>
+</body>
+</html>
