@@ -14,3 +14,6 @@ https://www.figma.com/ja-jp/
 
 - Figmaの使い方参考サイト
 https://stand-4u.com/web/tool/figma.html
+
+- コーディング
+Google AI Studio
